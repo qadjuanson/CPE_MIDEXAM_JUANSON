@@ -1,0 +1,18 @@
+---
+- name: Install Logstash in CentOS
+  yum:
+    name: logstash
+    state: present
+  when: ansible_distribution == "CentOS"
+
+- name: Install Logstash in Ubuntu
+  apt:
+    name: logstash
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Start Logstash
+  service:
+    name: logstash
+    state: started
+    enabled: yes

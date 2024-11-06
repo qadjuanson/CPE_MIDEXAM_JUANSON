@@ -1,0 +1,42 @@
+---
+- name: Add Elasticsearch YUM Repository in CentOS
+  yum_repository:
+    name: elastic-7.x
+    description: Elasticsearch repository for 7.x packages
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    gpgcheck: yes
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    enabled: yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install Elasticsearch in CentOS
+  yum:
+    name: elasticsearch
+    state: present
+  when: ansible_distribution == "CentOS"
+
+- name: Add Elasticsearch APT GPG Key in Ubuntu
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Add Elasticsearch APT Repository for Elasticsearch in Ubuntu
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/7.x/apt stable main'
+    state: present
+    filename: 'elastic-7.x'
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install Elasticsearch in Ubuntu
+  apt:
+    name: elasticsearch
+    state: present
+  when: ansible_distribution == "Ubuntu"
+
+- name: Start Elasticsearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes

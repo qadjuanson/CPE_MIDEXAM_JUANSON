@@ -1,0 +1,14 @@
+---
+- name: install updates redhat
+  tags: always
+  yum:
+    update_only: yes
+    update_cache: yes
+  when: ansible_distribution == "CentOS"
+
+- name: install updates debian
+  tags: always
+  apt:
+    upgrade: dist
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
