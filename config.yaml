@@ -28,3 +28,9 @@
   become: true
   roles:
   - nagios
+
+- name: Install Prometheus (Ubuntu)
+  hosts: Ubuntu
+  become: true
+  roles:
+  - prometheus
